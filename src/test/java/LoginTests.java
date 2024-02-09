@@ -7,60 +7,36 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
-import java.util.List;
-import java.util.Set;
 
 public class LoginTests extends BaseTest {
+
+    //@Test(enabled=false, description = "Test skipped because of open issue JIRA-123",priority =1)
+
     @Test
     public void LoginWithValidEmailPasswordTest() {
-    //      Added ChromeOptions argument below to fix websocket error
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
-
-        WebDriver driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
         //Open the Url
-        String url = "https://qa.koel.app/";
-        driver.get(url);
-
+        openLoginUrl();
         //Enter Email
-        WebElement emailInput = driver.findElement(By.cssSelector("[type='email']"));
-        emailInput.click();
-        emailInput.clear();
-        emailInput.sendKeys("Verify12@gmail.com");
-
+        enterEmail("Verify12@gmail.com");
         //Enter Password
-        WebElement passwordInput = driver.findElement(By.cssSelector("[type='password']"));
-        passwordInput.click();
-        passwordInput.clear();
-        passwordInput.sendKeys("te$t$tudent");
-
+        enterPassword("te$t$tudent");
         //Click on Log In
-        WebElement loginBtn = driver.findElement(By.cssSelector("[type='submit']"));
-        loginBtn.click();
-
+        clickSubmit();
         //check avatar for Homepage
         WebElement avatarField = driver.findElement(By.cssSelector("a>.avatar"));
         Assert.assertTrue(avatarField.isDisplayed());
-        //To close Browser
-        driver.quit();
-    }
-         @Test
+        }
+
+    @Test
          public void LoginWithEmptyEmailPassword() {
-             ChromeOptions options = new ChromeOptions();
-             options.addArguments("--remote-allow-origins=*");
-             WebDriver driver = new ChromeDriver(options);
-             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
              //Open the Url
-             String url = "https://qa.koel.app/";
-             driver.get(url);
+             openLoginUrl();
              //Click on Log In
+             clickSubmit();
              WebElement loginBtn = driver.findElement(By.cssSelector("[type='submit']"));
-             loginBtn.click();
+
              Assert.assertEquals(driver.getCurrentUrl(), url);
              Assert.assertTrue(loginBtn.isDisplayed());
-             driver.quit();
          }
 }
 
