@@ -80,6 +80,37 @@ public class BaseTest {
         avatar.click();
     }
 
+   // Playlist Helper methods
+    protected void choosePlaylist() {
+        WebElement playlistElement = driver.findElement(By.xpath("//section[@id='songResultsWrapper']//li[contains(text( ),'My Songs')]"));
+        playlistElement.click();
+    }
 
+    protected void clickAddTo() {
+        WebElement addToBtn = driver.findElement(By.cssSelector(".btn-add-to"));
+        addToBtn.click();
+    }
 
+    protected void selectFirstSong() {
+        WebElement selectSongElement = driver.findElement(By.cssSelector("#songResultsWrapper .item-container >table >tr >.title"));
+        selectSongElement.click();
+    }
+
+    protected void clickViewAll() {
+        WebElement viewAllBtn = driver.findElement(By.cssSelector(".songs>h1>button"));
+        viewAllBtn.click();
+    }
+
+    protected void searchSong(String song) {
+        WebElement searchField= driver.findElement(By.cssSelector("[type='search']"));
+        searchField.click();
+        searchField.clear();
+        searchField.sendKeys(song);
+    }
+    protected String getNotificationText() throws InterruptedException {
+        Thread.sleep(2000);
+        WebElement notificationMessage = driver.findElement(By.cssSelector("div.success.show"));
+        return notificationMessage.getText();
+
+    }
 }
