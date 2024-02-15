@@ -6,8 +6,6 @@ import org.testng.annotations.Test;
 public class ProfileTests extends BaseTest{
     @Test
     public void changeUserNameTest() throws InterruptedException {
-        //Login into Webapp
-        openLoginUrl();
         enterEmail("Verify12@gmail.com");
         enterPassword("te$t$tudent");
         clickSubmit();
