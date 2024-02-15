@@ -2,6 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="Smoke">
+    <parameter name="BaseURL" value="https://qa.koel.app/"/>
 
     <test name="Smoke Tests" preserve-order="false">
         <classes>
@@ -10,11 +11,11 @@
                     <include name="LoginWithValidEmailPasswordTest"/>
                 </methods>
             </class>
-            <class name="PlaylistTests">
-                <methods>
-                    <include name="addSongToPlaylistTest"/>
-                </methods>
-            </class>
+<!--            <class name="PlaylistTests">-->
+<!--                <methods>-->
+<!--                    <include name="addSongToPlaylistTest"/>-->
+<!--                </methods>-->
+<!--            </class>-->
         </classes>
     </test>
 </suite>

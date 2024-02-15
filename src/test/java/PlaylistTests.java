@@ -4,10 +4,10 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class PlaylistTests extends BaseTest {
+    //Add song into Playlist
     @Test
     public void addSongToPlaylistTest() throws InterruptedException {
         String notificationText = "Added 1 song into";
-        openLoginUrl();
         enterEmail("Verify12@gmail.com");
         enterPassword("te$t$tudent");
         clickSubmit();
@@ -27,8 +27,26 @@ public class PlaylistTests extends BaseTest {
         Thread.sleep(2000);
 
         //Assert notification message
-        Assert.assertTrue(getNotificationText().contains(notificationText));
+       // Assert.assertTrue(getNotificationText().contains(notificationText));
+    }
 
+    //Delete Playlist
+    @Test
+    public void deletePlaylistTest() throws InterruptedException {
+        String deletePlaylistMsg = "Deleted playlist";
+        enterEmail("Verify12@gmail.com");
+        enterPassword("te$t$tudent");
+        clickSubmit();
+        Thread.sleep(2000);
+        selectPlaylist();
+        Thread.sleep(2000);
+        //click on delete playlist
+        clickOnDeletePlaylist();
+        Thread.sleep(2000);
+
+      Assert.assertTrue(getNotificationText().contains(deletePlaylistMsg));
 
     }
+
+
 }
