@@ -4,12 +4,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 
 import java.time.Duration;
 
 public class BaseTest {
     public static WebDriver driver = null;
+    public static WebDriverWait wait;
     public static String url="";
 
     @BeforeSuite
@@ -23,6 +26,11 @@ public class BaseTest {
         return new Object[][] {{"NotExisting@emqil.com","NotExistingPassword"},{"Verify12@gamail.com"," "},{" "," "}};
     }
 
+    @DataProvider(name = "CorrectLoginProviders")
+    public static Object[][] getValidDataFromDataProvider(){
+        return new Object[][] {{"Verify12@gmail.com","te$t$tudent"}};
+    }
+
     @BeforeMethod
     @Parameters({"BaseURL"})
     public void launchBrowser(String BaseURL){
@@ -31,7 +39,8 @@ public class BaseTest {
         options.addArguments("--remote-allow-origins=*");
 
         driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); //Implicit wait
+        wait = new WebDriverWait(driver,Duration.ofSeconds(4));  //Explicit wait
         url=BaseURL;
         driver.get(url);
     }
@@ -42,18 +51,24 @@ public class BaseTest {
     }
 
     //LoginPage Helper Methods
+    protected void login(String email, String password) {
+        enterEmail(email);
+        enterPassword(password);
+        clickSubmit();
+    }
     public static void clickSubmit() {
-        WebElement loginBtn = driver.findElement(By.cssSelector("[type='submit']"));
+        WebElement loginBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[type='submit']")));
+        //WebElement loginBtn = driver.findElement(By.cssSelector("[type='submit']"));
         loginBtn.click();
     }
     public static void enterPassword(String password) {
-        WebElement passwordInput = driver.findElement(By.cssSelector("[type='password']"));
+        WebElement passwordInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[type='password']")));
         passwordInput.click();
         passwordInput.clear();
         passwordInput.sendKeys(password);
     }
     public static void enterEmail(String email) {
-        WebElement emailInput = driver.findElement(By.cssSelector("[type='email']"));
+        WebElement emailInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[type='email']")));
         emailInput.click();
         emailInput.clear();
         emailInput.sendKeys(email);
@@ -61,82 +76,81 @@ public class BaseTest {
 
     //Profile & Preferences page Helper Methods
     protected void clickOnSave() {
-        WebElement saveBtn= driver.findElement(By.cssSelector(".btn-submit"));
+        WebElement saveBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".btn-submit")));
         saveBtn.click();
     }
 
     protected void enterNewUserName(String newUserName) {
-        WebElement newUsernameInput= driver.findElement(By.cssSelector("#inputProfileName"));
+        WebElement newUsernameInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#inputProfileName")));
         newUsernameInput.click();
         newUsernameInput.clear();
         newUsernameInput.sendKeys(newUserName);
     }
 
-    protected void providePassword() {
-        WebElement passwordInput=driver.findElement(By.cssSelector("#inputProfileCurrentPassword"));
+    protected void providePassword(String password) {
+       WebElement passwordInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#inputProfileCurrentPassword")));
         passwordInput.click();
         passwordInput.clear();
-        passwordInput.sendKeys("te$t$tudent");
+        passwordInput.sendKeys(password);
     }
 
     protected void clickOnAvatar() {
-        WebElement avatar= driver.findElement(By.cssSelector(".view-profile .avatar"));
-        avatar.click();
+        WebElement avatarIcon = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".view-profile .avatar")));
+        avatarIcon.click();
     }
 
    // Playlist Helper methods
-    protected void choosePlaylist() {
-        WebElement playlistElement = driver.findElement(By.xpath("//section[@id='songResultsWrapper']//li[contains(text( ),'My Songs')]"));
+    protected void addSongIntoPlaylist() {
+        WebElement playlistElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#songResultsWrapper .screen-header .existing-playlists >ul >li:nth-child(6)")));
         playlistElement.click();
     }
 
     protected void clickAddTo() {
-        WebElement addToBtn = driver.findElement(By.cssSelector(".btn-add-to"));
+        WebElement addToBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".btn-add-to")));
         addToBtn.click();
     }
 
-    public void clickOnDeletePlaylist() throws InterruptedException {
-        WebElement deletePlaylistBtn = driver.findElement(By.cssSelector(".del.btn-delete-playlist"));
-       WebElement downloadAllBtn;;
-       if (driver.findElement(By.xpath("//a[contains(text(),' Download All')]")).isDisplayed()){
-           Thread.sleep(2000);
-           deletePlaylistBtn.click();
-           WebElement deletePopupWindowOkBtn=driver.findElement(By.cssSelector(".ok"));
-           deletePopupWindowOkBtn.click();
-                           }
-       else {
-           Thread.sleep(2000);
-           deletePlaylistBtn.click();
+    public void clickOnDeletePlaylist()  {
+        WebElement deletePlaylistBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".del.btn-delete-playlist")));
+        try {
+               //For Playlist with added songs
+               WebElement downloadAllBtn =wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[title='Download all songs in playlist']")));
+               deletePlaylistBtn.click();
+               WebElement okBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ok")));
+               okBtn.click();
+           }
+        catch (Exception e){
+               //For empty playlist
+               deletePlaylistBtn.click();
+           }
        }
 
-    }
-
-    public void selectPlaylist() throws InterruptedException {
-        WebElement selectPlaylistElement= driver.findElement(By.cssSelector("#playlists>ul>li:nth-child(4)"));
+    public void selectPlaylist() {
+        WebElement selectPlaylistElement= wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#playlists>ul>li:nth-child(4)")));
         selectPlaylistElement.click();
-
     }
 
     protected void selectFirstSong() {
-        WebElement selectSongElement = driver.findElement(By.cssSelector("#songResultsWrapper .item-container >table >tr >.title"));
+        WebElement selectSongElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#songResultsWrapper .item-container >table >tr >.title")));
         selectSongElement.click();
     }
 
     protected void clickViewAll() {
-        WebElement viewAllBtn = driver.findElement(By.cssSelector(".songs>h1>button"));
+        WebElement viewAllBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".songs>h1>button")));
         viewAllBtn.click();
     }
 
     protected void searchSong(String song) {
-        WebElement searchField= driver.findElement(By.cssSelector("[type='search']"));
+        WebElement searchField= wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[type='search']")));
         searchField.click();
         searchField.clear();
         searchField.sendKeys(song);
     }
-    protected String getNotificationText() throws InterruptedException {
-        Thread.sleep(2000);
-        WebElement notificationMessage = driver.findElement(By.cssSelector("div.success.show"));
+    protected String getNotificationText()  {
+        WebElement notificationMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.success.show")));
         return notificationMessage.getText();
 
     }
+
+
 }
