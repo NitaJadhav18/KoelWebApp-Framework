@@ -8,7 +8,7 @@ public class LoginTests extends BaseTest {
 
     //@Test(enabled=false, description = "Test skipped because of open issue JIRA-123",priority =1)
 
-    @Test(enabled = false, dataProvider = "CorrectLoginProviders",dataProviderClass = BaseTest.class)
+    @Test(enabled = true, dataProvider = "CorrectLoginProviders",dataProviderClass = BaseTest.class)
     public void LoginWithValidEmailPasswordTest(String email,String password) {
         //Enter Email
         enterEmail(email);
