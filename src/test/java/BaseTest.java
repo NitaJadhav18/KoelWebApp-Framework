@@ -9,15 +9,17 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
+import pages.HomePage;
+import pages.LoginPage;
 
 import java.time.Duration;
 import java.util.List;
 
 public class BaseTest {
     public static WebDriver driver = null;
-    public static WebDriverWait wait;
-    public static Actions actions;
-    public static String url="";
+    public static WebDriverWait wait = null;
+    public static Actions actions = null;
+    public static String url= null;
 
     @BeforeSuite
     static void setupClass() {
@@ -48,6 +50,7 @@ public class BaseTest {
         actions = new Actions(driver);   //Action class
         url=BaseURL;
         driver.get(url);
+        driver.manage().window().maximize();
     }
     @AfterMethod
     public void closeBrowser(){
@@ -55,29 +58,7 @@ public class BaseTest {
         driver.quit();
     }
 
-    //LoginPage Helper Methods
-    protected void login(String email, String password) {
-        enterEmail(email);
-        enterPassword(password);
-        clickSubmit();
-    }
-    public static void clickSubmit() {
-        WebElement loginBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[type='submit']")));
-        //WebElement loginBtn = driver.findElement(By.cssSelector("[type='submit']"));
-        loginBtn.click();
-    }
-    public static void enterPassword(String password) {
-        WebElement passwordInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[type='password']")));
-        passwordInput.click();
-        passwordInput.clear();
-        passwordInput.sendKeys(password);
-    }
-    public static void enterEmail(String email) {
-        WebElement emailInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[type='email']")));
-        emailInput.click();
-        emailInput.clear();
-        emailInput.sendKeys(email);
-    }
+
 
     //Profile & Preferences page Helper Methods
     protected void clickOnSave() {

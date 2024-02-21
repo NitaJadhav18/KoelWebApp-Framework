@@ -3,17 +3,27 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.HomePage;
+import pages.LoginPage;
+import pages.ProfilePreferencesPage;
+
+import java.time.Duration;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class ProfileTests extends BaseTest{
-    @Test( enabled = false, dataProvider = "CorrectLoginProviders", dataProviderClass = BaseTest.class)
-    public void changeUserNameTest(String email, String password) {
-        login(email,password);
-        clickOnAvatar();
-        providePassword(password);
-        String newUsername ="Ria";
-        enterNewUserName(newUsername);
-        clickOnSave();
-        WebElement avatarName=wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".view-profile .name")));
-        Assert.assertEquals(avatarName.getText(),newUsername); //check avatar name
+    @Test( enabled = true)
+    public void changeUserNameTest() throws InterruptedException {
+        LoginPage loginPage = new LoginPage(driver);
+        HomePage homePage =new HomePage(driver);
+        ProfilePreferencesPage profilePreferencesPage = new ProfilePreferencesPage(driver);
+        String newUsername ="Kia";
+        loginPage.login();
+        homePage.clickOnAvatar();
+        profilePreferencesPage.providePassword("te$t$tudent");
+        profilePreferencesPage.enterNewUserName(newUsername);
+        profilePreferencesPage.clickOnSave();
+        driver.navigate().refresh();
+        Assert.assertEquals(homePage.getAvatarName(),newUsername); //check avatar name
     }
 }
