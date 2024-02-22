@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class ProfilePreferencesPage extends BasePage{
@@ -10,24 +11,27 @@ public class ProfilePreferencesPage extends BasePage{
         super(givenDriver);
     }
     //Locators
-    By currentPasswordInputField = By.cssSelector("#inputProfileCurrentPassword");
-    By newUserNameInputField = By.cssSelector("#inputProfileName");
-    By saveBtn = By.cssSelector(".btn-submit");
+    @FindBy(css ="#inputProfileCurrentPassword")
+    WebElement currentPasswordInputField;
+    @FindBy(css ="#inputProfileName")
+    WebElement newUserNameInputField;
+    @FindBy(css =".btn-submit")
+    WebElement saveBtn;
 
     //Helper Methods
     public void providePassword(String password) {
-       findElement(currentPasswordInputField).click();
-       findElement(currentPasswordInputField).clear();
-       findElement(currentPasswordInputField).sendKeys(password);
+       currentPasswordInputField.click();
+      currentPasswordInputField.clear();
+       currentPasswordInputField.sendKeys(password);
     }
 
     public void enterNewUserName(String newUserName) {
-        findElement( newUserNameInputField).click();
-        findElement( newUserNameInputField).clear();
-        findElement( newUserNameInputField).sendKeys(newUserName);
+        newUserNameInputField.click();
+         newUserNameInputField.clear();
+         newUserNameInputField.sendKeys(newUserName);
     }
     public void clickOnSave(){
-        findElement(saveBtn).click();
+        saveBtn.click();
     }
 
 }

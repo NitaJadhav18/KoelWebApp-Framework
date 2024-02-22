@@ -2,6 +2,8 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 public class AllSongsPage extends BasePage{
     public AllSongsPage(WebDriver givenDriver) {
@@ -9,27 +11,25 @@ public class AllSongsPage extends BasePage{
     }
 
     //Locators
-    By firstSongElement = By.cssSelector(".item-container td:nth-child(2)");
-    By playElement = By.cssSelector(".playback");
-    By visulizerElement = By.cssSelector("[title='Click for a marvelous visualizer!']");
-    By selectPlaylistElement = By.cssSelector("#playlists>ul>li:nth-child(4)");
-
-
+    @FindBy(css =".item-container td:nth-child(2)")
+    WebElement firstSongElement;
+    @FindBy(css =".playback")
+    WebElement playElement;
+    @FindBy(css ="#playlists>ul>li:nth-child(4)")
+    WebElement selectPlaylistElement;
 
     //Helper Methods
     //contextClick(Right-click) on first song
     public void contextClickFirstSong(){
-        actions.contextClick(findElement(firstSongElement)).perform();
+        contextClick(firstSongElement);
     }
     public void choosePlayOption(){
-        findElement(playElement).click();
+        playElement.click();
     }
-    public boolean isSongPlaying(){
-        return findElement(visulizerElement).isDisplayed();
-    }
+
     //add song into playlist with drag and drop
     public void addSongPlaylistDragAndDrop(){
-        actions.dragAndDrop(findElement(firstSongElement),findElement(selectPlaylistElement)).build().perform();
+        actions.dragAndDrop(firstSongElement,selectPlaylistElement).build().perform();
     }
 
 
