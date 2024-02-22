@@ -9,8 +9,8 @@
 <!--                <class name="LoginTests"/>-->
 <!--                <class name="BaseTest"/>-->
 <!--                <class name="ProfileTests"/>-->
-                <class name="PlaylistTests"/>
-<!--                 <class name="SongTests"/>-->
+<!--                <class name="PlaylistTests"/>-->
+                 <class name="SongTests"/>
         </classes>
     </test>
 </suite>

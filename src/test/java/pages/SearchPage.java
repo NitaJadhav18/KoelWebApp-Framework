@@ -2,32 +2,39 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 public class SearchPage extends BasePage{
     public SearchPage(WebDriver givenDriver) {
         super(givenDriver);
     }
     //Locators
-    By viewAllBtn = By.cssSelector(".songs>h1>button");
-    By firstSong = By.cssSelector("#songResultsWrapper .item-container >table >tr >.title");
-    By addToBtn = By.cssSelector(".btn-add-to");
-    By playlistElement = By.cssSelector("#songResultsWrapper .screen-header .existing-playlists >ul >li:nth-child(6)");
-    By notificationMessage = By.cssSelector("div.success.show");
+    @FindBy(css =".songs>h1>button")
+    WebElement viewAllBtn;
+    @FindBy(css ="#songResultsWrapper .item-container >table >tr >.title")
+    WebElement firstSong;
+    @FindBy(css =".btn-add-to")
+    WebElement addToBtn;
+    @FindBy(css ="#songResultsWrapper .screen-header .existing-playlists >ul >li:nth-child(6)")
+    WebElement playlistElement;
+    @FindBy(css ="div.success.show")
+    WebElement notificationMessage;
 
     //Helper Methods
     public void  clickViewAll(){
-        findElement(viewAllBtn).click();
+        viewAllBtn.click();
     }
     public void selectFirstSong(){
-        findElement(firstSong).click();
+        firstSong.click();
     }
     public void clickAddTo(){
-        findElement(addToBtn).click();
+        addToBtn.click();
     }
     public void addSongIntoPlaylist(){
-        findElement(playlistElement).click();
+        playlistElement.click();
     }
     public String getNotificationText(){
-        return findElement(notificationMessage).getText();
+        return notificationMessage.getText();
     }
 }
