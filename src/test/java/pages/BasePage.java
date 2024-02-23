@@ -35,6 +35,7 @@ public class BasePage {
     public WebElement findElement(By locator){
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
+
     //Context click(Right-click)
     public void contextClick(WebElement locator){
         //WebElement contexClickElement = wait.until(ExpectedConditions.visibilityOfElementLocated((By) locator));
@@ -45,8 +46,16 @@ public class BasePage {
        // WebElement playElement = driver.findElement((By) locator);
         actions.moveToElement(locator).perform();
     }
+    //For click
+    public void click(WebElement locator){
+        locator.click();
+    }
+    //For double click
+    public void doubleClick(WebElement locator){
+        actions.doubleClick(locator).perform();
+    }
     public void waitForOverlayToGoAway(){
-        wait.until(ExpectedConditions.invisibilityOfElementLocated((By) overlayLocator));
+        wait.until(ExpectedConditions.invisibilityOf(overlayLocator));
     }
     public void chooseAllSongsList(){
        allSongsElement.click();
