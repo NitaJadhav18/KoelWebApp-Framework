@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePage extends BasePage {
     //Constructor
@@ -26,12 +27,13 @@ public class HomePage extends BasePage {
 
     //Page Methods
     public WebElement getUserAvatar() {
-        return userAvatarIcon;
+        //wait.until(ExpectedConditions.elementToBeClickable(userAvatarIcon));
+        return findElement(By.cssSelector("a>.avatar"));
     }
 
     //for song search
     public void searchSong(String song) {
-       searchInputField.click();
+        searchInputField.click();
        searchInputField.clear();
        searchInputField.sendKeys(song);
     }
@@ -41,10 +43,12 @@ public class HomePage extends BasePage {
     }
 
     public void choosePlaylistByName(String playlistName) {
-        findElement(By.xpath("//section[@id='playlists'] //a[contains(text(),'" + playlistName + "')]")).click();
+        WebElement playlistNameElement = driver.findElement(By.xpath("//section[@id='playlists'] //a[contains(text(),'" + playlistName + "')]"));
+        playlistNameElement.click();
     }
 
     public void clickOnAvatar() {
+        findElement(By.cssSelector("a>.avatar"));
         userAvatarIcon.click();
     }
 

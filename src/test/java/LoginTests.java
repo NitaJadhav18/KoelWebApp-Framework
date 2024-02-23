@@ -6,12 +6,14 @@ import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.LoginPage;
 
+import java.util.concurrent.TimeUnit;
+
 public class LoginTests extends BaseTest {
 
     //@Test(enabled=false, description = "Test skipped because of open issue JIRA-123",priority =1)
 
     @Test(dataProvider = "CorrectLoginProviders",dataProviderClass = BaseTest.class)
-    public void LoginWithValidEmailPasswordTest(String email,String password) {
+    public void LoginWithValidEmailPasswordTest(String email,String password) throws InterruptedException {
         //Create object of page classes to access elements and methods
         LoginPage loginPage = new LoginPage(driver);
         HomePage homePage = new HomePage(driver);

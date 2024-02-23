@@ -17,7 +17,7 @@ public class ProfileTests extends BaseTest{
         LoginPage loginPage = new LoginPage(driver);
         HomePage homePage =new HomePage(driver);
         ProfilePreferencesPage profilePreferencesPage = new ProfilePreferencesPage(driver);
-        String newUsername ="Kia";
+        String newUsername ="Zia";
         loginPage.login();
         homePage.clickOnAvatar();
         profilePreferencesPage.providePassword("te$t$tudent");

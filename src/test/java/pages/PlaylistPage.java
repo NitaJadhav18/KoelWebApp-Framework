@@ -35,7 +35,8 @@ public class PlaylistPage extends BasePage{
     public void clickOnDeletePlaylist(){
         try {
             //For Playlist with added songs
-           findElement((By) downloadAllBtn);
+            findElement(By.cssSelector("[title='Download all songs in playlist']"));
+            //wait.until(ExpectedConditions.elementToBeClickable(downloadAllBtn));
            deletePlaylistBtn.click();
            okBtn.click();
            }
@@ -64,11 +65,13 @@ public class PlaylistPage extends BasePage{
     //get playlistDetails
     public String getPlaylistDetails() {
         //return song total of playlist
-        return playlistDetails.getText();
+        return findElement(By.cssSelector(".meta.text-secondary .meta")).getText();
     }
     //Rename Playlist by double click
     public void doubleClickPlaylistToRename(String newPlaylistName)  {
-        actions.doubleClick(playlistElement).perform();
+        doubleClick(playlistElement);
+       findElement(By.cssSelector("[name='name']"));
+      //  actions.doubleClick(playlistElement).perform();
         //to clear inputfield select all with ctrl A and then Backspace to clear
         playlistInputField.sendKeys(Keys.chord(Keys.CONTROL,"A",Keys.BACK_SPACE));
         playlistInputField.sendKeys(newPlaylistName);
