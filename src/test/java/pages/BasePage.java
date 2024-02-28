@@ -44,13 +44,13 @@ public class BasePage {
     //Hover  mouse to playback
     public void hoverAction(WebElement locator){
        // WebElement playElement = driver.findElement((By) locator);
-        actions.moveToElement(locator).perform();
+        actions.moveToElement(locator).build().perform();
     }
     //For click
     public void click(WebElement locator){
         locator.click();
     }
-    //For double click
+    //For double-clicked
     public void doubleClick(WebElement locator){
         actions.doubleClick(locator).perform();
     }
