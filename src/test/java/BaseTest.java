@@ -1,10 +1,14 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.bouncycastle.oer.Switch;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -41,17 +45,31 @@ public class BaseTest {
     @BeforeMethod
     @Parameters({"BaseURL"})
     public void launchBrowser(String BaseURL){
-        //      Added ChromeOptions argument below to fix websocket error
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
-       // WebDriverManager.chromedriver().clearDriverCache().setup();
-        driver = new ChromeDriver(options);
+        driver = pickBrowser(System.getProperty("browser"));
+        driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); //Implicit wait
         wait = new WebDriverWait(driver,Duration.ofSeconds(5));  //Explicit wait
         actions = new Actions(driver);   //Action class
         url=BaseURL;
         driver.get(url);
-        driver.manage().window().maximize();
+    }
+    public static WebDriver pickBrowser(String browser){
+        switch(browser){
+            case "firefox":
+                WebDriverManager.firefoxdriver().setup();
+                return driver = new FirefoxDriver();
+            case "MicrosoftEdge":
+                WebDriverManager.edgedriver().setup();
+                EdgeOptions edgeoptions =new EdgeOptions();
+                edgeoptions.addArguments("--remote-allow-origins=*");
+                return driver = new EdgeDriver(edgeoptions);
+            default:
+                WebDriverManager.chromedriver().setup();
+                //      Added ChromeOptions argument below to fix websocket error
+                ChromeOptions options =new ChromeOptions();
+                options.addArguments("--remote-allow-origins=*");
+                return driver = new ChromeDriver(options);
+        }
     }
     @AfterMethod
     public void closeBrowser(){
