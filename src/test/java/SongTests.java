@@ -9,8 +9,8 @@ public class SongTests extends BaseTest{
     //Playing a song with context click(Right Click)
     @Test(enabled = true)
     public void playSong()  {
-        LoginPage loginPage = new LoginPage(driver);
-        AllSongsPage allSongsPage = new AllSongsPage(driver);
+        LoginPage loginPage = new LoginPage(getDriver());
+        AllSongsPage allSongsPage = new AllSongsPage(getDriver());
         loginPage.login();
         allSongsPage.chooseAllSongsList();   //click on All Songs
         allSongsPage.contextClickFirstSong();  //Right-click on first song
@@ -21,8 +21,8 @@ public class SongTests extends BaseTest{
     //Testcase for Hover Play button
     @Test(enabled = true)
     public void hoverPlayTest() {
-        LoginPage loginPage = new LoginPage(driver);
-        HomePage homePage = new HomePage(driver);
+        LoginPage loginPage = new LoginPage(getDriver());
+        HomePage homePage = new HomePage(getDriver());
         loginPage.login();
         homePage.chooseAllSongsList();   //select AllSongs
         homePage.hoverPlay();    //hover to playback
