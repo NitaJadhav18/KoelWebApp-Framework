@@ -9,9 +9,9 @@ public class PlaylistTests extends BaseTest {
     //Add song into Playlist
     @Test(enabled = true)
     public void addSongToPlaylistTest()  {
-        LoginPage loginPage = new LoginPage(driver);
-        HomePage homePage = new HomePage(driver);
-        SearchPage searchPage = new SearchPage(driver);
+        LoginPage loginPage = new LoginPage(getDriver());
+        HomePage homePage = new HomePage(getDriver());
+        SearchPage searchPage = new SearchPage(getDriver());
         String notificationText = "Added 1 song into";
          loginPage.login();
          homePage.searchSong("pluto");  //search a song
@@ -27,9 +27,9 @@ public class PlaylistTests extends BaseTest {
     //Testcase to assert that a playlist has expected number of songs
     @Test(enabled = true)
     public void CountSongsIntoPlaylistTest() {
-        LoginPage loginPage = new LoginPage(driver);
-        HomePage homePage = new HomePage(driver);
-        PlaylistPage playlistPage = new PlaylistPage(driver);
+        LoginPage loginPage = new LoginPage(getDriver());
+        HomePage homePage = new HomePage(getDriver());
+        PlaylistPage playlistPage = new PlaylistPage(getDriver());
         loginPage.login();
         homePage.choosePlaylistByName("test");
         //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -42,10 +42,10 @@ public class PlaylistTests extends BaseTest {
     //Add songs from All songs into playlist with drag and drop
     @Test(enabled = true)
     public void addSongsIntoPlaylist()  {
-        LoginPage loginPage = new LoginPage(driver);
-        HomePage homePage = new HomePage(driver);
-        AllSongsPage allSongsPage = new AllSongsPage(driver);
-        PlaylistPage playlistPage = new PlaylistPage(driver);
+        LoginPage loginPage = new LoginPage(getDriver());
+        HomePage homePage = new HomePage(getDriver());
+        AllSongsPage allSongsPage = new AllSongsPage(getDriver());
+        PlaylistPage playlistPage = new PlaylistPage(getDriver());
         loginPage.login();
         homePage.chooseAllSongsList();   //select All Songs
         allSongsPage.addSongPlaylistDragAndDrop();  //drag and drop song
@@ -56,8 +56,8 @@ public class PlaylistTests extends BaseTest {
     @Test(enabled = true )
     public void renamePlaylistTest()  {
         String newPlaylistName = "My Songs";
-        LoginPage loginPage = new LoginPage(driver);
-        PlaylistPage playlistPage = new PlaylistPage(driver);
+        LoginPage loginPage = new LoginPage(getDriver());
+        PlaylistPage playlistPage = new PlaylistPage(getDriver());
         loginPage.login();
         playlistPage.doubleClickPlaylistToRename(newPlaylistName);
 
@@ -66,9 +66,9 @@ public class PlaylistTests extends BaseTest {
     //Delete Playlist
     @Test(enabled = true)
     public void deletePlaylistTest() {
-        LoginPage loginPage = new LoginPage(driver);
-        HomePage homePage = new HomePage(driver);
-        PlaylistPage playlistPage = new PlaylistPage(driver);
+        LoginPage loginPage = new LoginPage(getDriver());
+        HomePage homePage = new HomePage(getDriver());
+        PlaylistPage playlistPage = new PlaylistPage(getDriver());
         String deletePlaylistMsg = "Deleted playlist";
         loginPage.login();
         homePage.selectPlaylist();   //select playlist to delete
