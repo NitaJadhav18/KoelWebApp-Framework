@@ -69,7 +69,13 @@ public class BaseTest {
     public static WebDriver pickBrowser(String browser) throws MalformedURLException {
         DesiredCapabilities caps = new DesiredCapabilities();
         String gridURL = "http://192.168.1.101:4444";
+        ChromeOptions options =new ChromeOptions();
+        //      Added ChromeOptions argument below to fix websocket error
+        options.addArguments("--remote-allow-origins=*");
         switch(browser){
+            case "chrome":
+                WebDriverManager.chromedriver().setup();
+                return driver = new ChromeDriver(options);
             case "firefox":  //gradle clean test -Dbrowser=firefox
                 WebDriverManager.firefoxdriver().setup();
                 return driver = new FirefoxDriver();
@@ -91,9 +97,6 @@ public class BaseTest {
                 return lambdaTest();
             default:
                 WebDriverManager.chromedriver().setup();
-                //      Added ChromeOptions argument below to fix websocket error
-                ChromeOptions options =new ChromeOptions();
-                options.addArguments("--remote-allow-origins=*");
                 return driver = new ChromeDriver(options);
         }
     }
