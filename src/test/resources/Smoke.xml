@@ -11,6 +11,12 @@
                     <include name="LoginWithValidEmailPasswordTest"/>
                 </methods>
             </class>
+            <class name="SongTests">
+            <methods>
+                <include name="playSong"/>
+                <include name="hoverPlayTest"/>
+            </methods>
+        </class>
 <!--            <class name="PlaylistTests">-->
 <!--                <methods>-->
 <!--                    <include name="addSongToPlaylistTest"/>-->
