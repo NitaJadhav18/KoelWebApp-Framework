@@ -17,53 +17,39 @@ import pages.LoginPage;
 import java.time.Duration;
 
 public class LoginStepDefination {
-    WebDriver driver=null;
-    WebDriverWait wait = null;
 
-    @Before
-    public void setBrowser(){
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins**");
-        driver = new ChromeDriver(options);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-    }
-    @After
-    public void tearDown(){
-        driver.quit();
-    }
     @Given("I open Login Page")
     public void iOpenLoginPage(){
-        driver.get("https://qa.koel.app/");
+        BaseStepDefination.getDriver().get("https://qa.koel.app/");
     }
 
     @When("I enter email {string}")
     public void iEnterEmail(String email) {
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(BaseStepDefination.getDriver());
         loginPage.provideEmail(email);
     }
 
     @And("I enter password {string}")
     public void iEnterPassword(String password) {
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(BaseStepDefination.getDriver());
         loginPage.providePassword(password);
     }
 
     @And("I click Login")
     public void iClickLogin() {
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(BaseStepDefination.getDriver());
         loginPage.clickLogin();
     }
 
     @Then("I am at HomePage")
     public void iAmAtHomePage() {
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(BaseStepDefination.getDriver());
         homePage.getUserAvatar();
     }
 
     @Then("I am at LoginPage")
     public void iAmAtLoginPage() {
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(BaseStepDefination.getDriver());
         Assert.assertTrue(loginPage.getLoginBtn().isDisplayed());
     }
 }
