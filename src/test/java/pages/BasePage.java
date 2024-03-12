@@ -38,7 +38,7 @@ public class BasePage {
 
     //Context click(Right-click)
     public void contextClick(WebElement locator){
-        //WebElement contexClickElement = wait.until(ExpectedConditions.visibilityOfElementLocated((By) locator));
+        wait.until(ExpectedConditions.elementToBeClickable(locator));
         actions.contextClick(locator).perform();
     }
     //Hover  mouse to playback
