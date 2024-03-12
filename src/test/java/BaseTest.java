@@ -34,11 +34,6 @@ public class BaseTest {
     public static String url= null;
     public static final ThreadLocal<WebDriver> threadDriver = new ThreadLocal<>();
 
-//    @BeforeSuite
-//    static void setupClass() {
-//        WebDriverManager.chromedriver().setup();
-//    }
-
     //DataProvider for IncorrectLogin data
     @DataProvider(name = "IncorrectLoginProviders")
     public static Object[][] getDataFromDataProvider(){
